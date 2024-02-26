@@ -94,9 +94,19 @@ class AuthViewController: UIViewController,  WKNavigationDelegate {
             var i = urlString.components(separatedBy: "\(redirect_string)=")
             var d = i[1].components(separatedBy: "&")
             token = d[0]
+            
+            
+            self.dismiss(animated: true)
             print("FINAL KEY \(token)")
 
             print("SELF IN WEBVIE ", self)
+//            let vc = (UIApplication.shared.firstKeyWindow?.rootViewController!)!
+
+//            self.present(vc, animated: true, completion: nil)
+//            self.view = profile
+//            self.dismiss(animated: true, completion: nil)
+            self.navigationController?.popViewController(animated: true)
+
            
             decisionHandler(.allow)
 
@@ -129,7 +139,7 @@ struct AuthView: UIViewControllerRepresentable{
     func updateUIViewController(_ uiViewController: AuthViewController, context: Context) {
         if token.count > 0{
             
-            userDefaults.set(token, forKey: "userKey")
+            userDefaults.set(token, forKey: "userToken")
             
         }
 

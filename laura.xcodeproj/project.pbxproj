@@ -13,14 +13,10 @@
 		4A364C1B2B865CF500C8F1D2 /* lauraApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A364C1A2B865CF500C8F1D2 /* lauraApp.swift */; };
 		4A364C1D2B865CF500C8F1D2 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A364C1C2B865CF500C8F1D2 /* ContentView.swift */; };
 		4A364C1F2B865CF600C8F1D2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4A364C1E2B865CF600C8F1D2 /* Assets.xcassets */; };
-		4A364C222B865CF600C8F1D2 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4A364C212B865CF600C8F1D2 /* Preview Assets.xcassets */; };
 		4A364C2D2B865CF600C8F1D2 /* lauraTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A364C2C2B865CF600C8F1D2 /* lauraTests.swift */; };
 		4A364C632B866B7500C8F1D2 /* twitch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A364C622B866B7500C8F1D2 /* twitch.swift */; };
-		4A364C692B86775500C8F1D2 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A364C682B86775500C8F1D2 /* ViewController.swift */; };
 		4A364C6F2B86873700C8F1D2 /* nav.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A364C6E2B86873700C8F1D2 /* nav.swift */; };
 		4A364C712B868BE500C8F1D2 /* following.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A364C702B868BE500C8F1D2 /* following.swift */; };
-		4A49130E2B869DA50085D1AB /* login.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A49130D2B869DA50085D1AB /* login.swift */; };
-		4A4913152B8774E90085D1AB /* loginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A4913142B8774E90085D1AB /* loginController.swift */; };
 		4A92CB262B8B72F100C41FC4 /* profile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A92CB252B8B72F100C41FC4 /* profile.swift */; };
 		4AF4B33B2B8699F000484F70 /* SimpleOAuth2 in Frameworks */ = {isa = PBXBuildFile; productRef = 4AF4B33A2B8699F000484F70 /* SimpleOAuth2 */; };
 /* End PBXBuildFile section */
@@ -43,16 +39,12 @@
 		4A364C1A2B865CF500C8F1D2 /* lauraApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = lauraApp.swift; sourceTree = "<group>"; };
 		4A364C1C2B865CF500C8F1D2 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		4A364C1E2B865CF600C8F1D2 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		4A364C212B865CF600C8F1D2 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		4A364C232B865CF600C8F1D2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4A364C282B865CF600C8F1D2 /* lauraTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = lauraTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		4A364C2C2B865CF600C8F1D2 /* lauraTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = lauraTests.swift; sourceTree = "<group>"; };
 		4A364C622B866B7500C8F1D2 /* twitch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = twitch.swift; sourceTree = "<group>"; };
-		4A364C682B86775500C8F1D2 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		4A364C6E2B86873700C8F1D2 /* nav.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = nav.swift; sourceTree = "<group>"; };
 		4A364C702B868BE500C8F1D2 /* following.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = following.swift; sourceTree = "<group>"; };
-		4A49130D2B869DA50085D1AB /* login.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = login.swift; sourceTree = "<group>"; };
-		4A4913142B8774E90085D1AB /* loginController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = loginController.swift; sourceTree = "<group>"; };
 		4A92CB252B8B72F100C41FC4 /* profile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = profile.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -98,15 +90,17 @@
 		4A364C152B865CF500C8F1D2 /* laura */ = {
 			isa = PBXGroup;
 			children = (
-				4A4913132B8774D00085D1AB /* controller */,
-				4A4913122B8774C00085D1AB /* view */,
+				4A60CC812B8C355500D25976 /* Preview Content */,
+				4A364C622B866B7500C8F1D2 /* twitch.swift */,
+				4A364C6E2B86873700C8F1D2 /* nav.swift */,
+				4A364C702B868BE500C8F1D2 /* following.swift */,
+				4A2175A32B8818BD0085B65F /* auth.swift */,
+				4A2175A72B8AB2120085B65F /* Home.swift */,
+				4A92CB252B8B72F100C41FC4 /* profile.swift */,
 				4A364C1A2B865CF500C8F1D2 /* lauraApp.swift */,
 				4A364C1C2B865CF500C8F1D2 /* ContentView.swift */,
 				4A364C1E2B865CF600C8F1D2 /* Assets.xcassets */,
 				4A364C232B865CF600C8F1D2 /* Info.plist */,
-				4A364C202B865CF600C8F1D2 /* Preview Content */,
-				4A364C622B866B7500C8F1D2 /* twitch.swift */,
-				4A49130D2B869DA50085D1AB /* login.swift */,
 			);
 			path = laura;
 			sourceTree = "<group>";
@@ -119,14 +113,6 @@
 			path = Packages;
 			sourceTree = "<group>";
 		};
-		4A364C202B865CF600C8F1D2 /* Preview Content */ = {
-			isa = PBXGroup;
-			children = (
-				4A364C212B865CF600C8F1D2 /* Preview Assets.xcassets */,
-			);
-			path = "Preview Content";
-			sourceTree = "<group>";
-		};
 		4A364C2B2B865CF600C8F1D2 /* lauraTests */ = {
 			isa = PBXGroup;
 			children = (
@@ -135,25 +121,11 @@
 			path = lauraTests;
 			sourceTree = "<group>";
 		};
-		4A4913122B8774C00085D1AB /* view */ = {
+		4A60CC812B8C355500D25976 /* Preview Content */ = {
 			isa = PBXGroup;
 			children = (
-				4A364C6E2B86873700C8F1D2 /* nav.swift */,
-				4A364C702B868BE500C8F1D2 /* following.swift */,
-				4A2175A32B8818BD0085B65F /* auth.swift */,
-				4A2175A72B8AB2120085B65F /* Home.swift */,
-				4A92CB252B8B72F100C41FC4 /* profile.swift */,
 			);
-			path = view;
-			sourceTree = "<group>";
-		};
-		4A4913132B8774D00085D1AB /* controller */ = {
-			isa = PBXGroup;
-			children = (
-				4A364C682B86775500C8F1D2 /* ViewController.swift */,
-				4A4913142B8774E90085D1AB /* loginController.swift */,
-			);
-			path = controller;
+			path = "Preview Content";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -244,7 +216,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4A364C222B865CF600C8F1D2 /* Preview Assets.xcassets in Resources */,
 				4A364C1F2B865CF600C8F1D2 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -267,12 +238,9 @@
 				4A364C1B2B865CF500C8F1D2 /* lauraApp.swift in Sources */,
 				4A2175A82B8AB2120085B65F /* Home.swift in Sources */,
 				4A364C712B868BE500C8F1D2 /* following.swift in Sources */,
-				4A49130E2B869DA50085D1AB /* login.swift in Sources */,
-				4A4913152B8774E90085D1AB /* loginController.swift in Sources */,
 				4A364C6F2B86873700C8F1D2 /* nav.swift in Sources */,
 				4A2175A42B8818BD0085B65F /* auth.swift in Sources */,
 				4A92CB262B8B72F100C41FC4 /* profile.swift in Sources */,
-				4A364C692B86775500C8F1D2 /* ViewController.swift in Sources */,
 				4A364C632B866B7500C8F1D2 /* twitch.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
