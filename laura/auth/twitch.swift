@@ -32,25 +32,32 @@ class Twitch : ObservableObject{
         let pagination: Dictionary<String, String>
     }
     func token()->String{
-        let token =  userDefaults.string(forKey: "userToken")
-        let token_ = UserDefaults.standard.object(forKey:"userKey")  as? String
-        print("TOKEN::: \(token) , TOKEN______: \(token_)")
-        return token ?? ""
+        let token =  userDefaults.string(forKey: "userToken") as? String
+//        let token_ = UserDefaults.standard.object(forKey:"userKey")  as? String
+        print("TOKEN::: \(token) ")
+        return token!
 //        return token_
     }
     
     func req(baseUrl:String )->URLRequest{
+        
         print("VALIDATING TOKEN", baseUrl)
         
-        let url = URL(string:baseUrl)!
-        var payload = String()
-        var request = URLRequest(url:url)
-        request.addValue("Bearer \(self.token())", forHTTPHeaderField: "Authorization")
-        request.addValue(
-            "application/json",
-            forHTTPHeaderField: "Content-Type"
-        )
-        return request
+
+        let url = URL(string:baseUrl)
+        
+            var request = URLRequest(url:url!)
+            request.addValue("Bearer \(self.token())", forHTTPHeaderField: "Authorization")
+            request.addValue(
+                "application/json",
+                forHTTPHeaderField: "Content-Type"
+            )
+      
+            
+            return request
+
+        
+      
     }
     
 
@@ -62,7 +69,7 @@ class Twitch : ObservableObject{
                       self?.hasError = false
                       self?.isLoggedIn = false
                   } else if let data = data {
-                      print(data,"DATATAA")
+                      print(data,"D0000")
                       do {
                           let signInResponse = try JSONDecoder().decode(User.self, from: data)
                          self?.validUser = signInResponse
@@ -70,8 +77,9 @@ class Twitch : ObservableObject{
                           self?.isLoggedIn = true
                           self?.isPresented = false
                           self?.userDefaults.set(data, forKey: "encodedUser")
-                          self?.userDefaults.set(data, forKey: "encodedUser")
                           self?.userDefaults.set(self?.validUser?.client_id, forKey: "clientId")
+                          self?.userDefaults.set(self?.validUser?.user_id, forKey: "userId")
+
 //                          print(signInResponse, "USER OB")
                       } catch {
                           print("Unable to Decode Response \(error)")
@@ -85,28 +93,26 @@ class Twitch : ObservableObject{
     
     func followed(){
 //        let client_id = /*validUser*/?.client_id
-        var clientId = userDefaults.string(forKey: "clientId")
+        var userId = userDefaults.string(forKey: "userId")!
+
+        var baseUrl = "https://api.twitch.tv/helix/channels/followed?user_id=\(userId)"
         
-        var followingUrl  = "GET https://api.twitch.tv/helix/channels/followed?client_id=\(clientId)"
-        URLSession.shared.dataTask(with: self.req(baseUrl:followingUrl)) { [weak self] data, response, error in
+        URLSession.shared.dataTask(with: self.req(baseUrl:baseUrl)) { [weak self] data, response, error in
               DispatchQueue.main.async {
                   if error != nil || (response as! HTTPURLResponse).statusCode != 200 {
-                      print("ERROR")
+                 print(error, "ERROR", response)
                   } else if let data = data {
                       print(data,"DATATAA")
                       do {
-                          let signInResponse = try JSONDecoder().decode(Followed.self, from: data)
-                         self?.followedList = signInResponse
-
+                          let signInResponse = try JSONDecoder().decode(User.self, from: data)
+//                         self?.validUser = signInResponse
+                          print(signInResponse, "FOLLOWERS")
                       } catch {
                           print("Unable to Decode Response \(error)")
                       }
                   }
-
               }
           }.resume()
-        
-
         
     }
     
