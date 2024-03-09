@@ -11,7 +11,7 @@ import WebKit
 import JavaScriptCore
 
 
-class frameController: UIViewController,  WKNavigationDelegate  {
+class embedController: UIViewController,  WKNavigationDelegate  {
     
 
     
@@ -34,13 +34,13 @@ class frameController: UIViewController,  WKNavigationDelegate  {
         print("in make scriot", streamer)
         
         var script =    """
-                          var options = {
-                            channel: "\(streamer)"
-                          };
-                        
-                          var player = new Twitch.Player("twitch-embed", options);
-                          player.setVolume(0.5);
-
+                              new Twitch.Embed("twitch-embed", {
+                                width: 854,
+                                height: 480,
+                                channel: "\(streamer)",
+                                // Only needed if this page is going to be embedded on other websites
+                                parent: ["embed.example.com", "othersite.example.com"]
+                              });
                         """
         
         return script
@@ -63,49 +63,20 @@ class frameController: UIViewController,  WKNavigationDelegate  {
 
     let html:String = """
 <html>
-
-<style>
-
-
-#twitch-container {
-    position: relative;
-   overflow: hidden;
-    width: 100%;
-  
-  padding-top: 56.25%;
-    padding-top: 60.25%;
-  
-  }
-  #twitch-embed iframe {
-    position: absolute;
-    margin: 0 0 0 -1em;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    right: 0;
-    width: 110%;
-    height: 100%;
-  }
-  
-</style>
-<head>
-<script src="https://player.twitch.tv/js/embed/v1.js"></script>
-</head>
   <body>
-<div id="twitch-container">
-  <div id="twitch-embed">
-</div>
-</div>
+    <!-- Add a placeholder for the Twitch embed -->
+    <div id="twitch-embed"></div>
 
-   
+    <!-- Load the Twitch embed JavaScript file -->
+    <script src="https://embed.twitch.tv/embed/v1.js"></script>
+
+    <!-- Create a Twitch.Embed object that will render within the "twitch-embed" element -->
+  
   </body>
-
-
 </html>
-
 """
     
-//    
+//
 //    let ihtml:String = """
 //<iframe
 //    src="https://player.twitch.tv/?channel=hiswattson&parent=http://localhost"
@@ -133,7 +104,6 @@ class frameController: UIViewController,  WKNavigationDelegate  {
         super.viewDidLoad()
         setupWebView(streamer:streamer)
         
-        
     }
 //            loadWebView()
         
@@ -153,6 +123,7 @@ class frameController: UIViewController,  WKNavigationDelegate  {
         webView.isOpaque = false
         webView.backgroundColor = UIColor.clear
         webView.scrollView.backgroundColor = UIColor.clear
+        
 //            webView.contentMode = .scaleAspectFill
 //            webView.contentMode = .scaleAspectFit
             webView.contentMode = .scaleToFill
@@ -177,20 +148,20 @@ class frameController: UIViewController,  WKNavigationDelegate  {
     
 
 
-struct iframe: UIViewControllerRepresentable{
+struct everything: UIViewControllerRepresentable{
     var streamer:String
 
 //    print(streamerVar, "STREAMER")
     
 
-    func makeUIViewController(context: Context) -> frameController {
+    func makeUIViewController(context: Context) -> embedController {
 //        print("HTML: \(html), SCRIPT: \(script)")
         print(streamer, "DOUBLE CHECk")
-        let frameController = frameController(streamer: streamer)
+        let frameController = embedController(streamer: streamer)
         return frameController
     }
     
-    func updateUIViewController(_ uiViewController: frameController, context: Context) {
+    func updateUIViewController(_ uiViewController: embedController, context: Context) {
         //print(streamer, "CONTEXT ENEW STREAMER")
         print(streamer, "STREAMER VAR")
         

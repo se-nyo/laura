@@ -21,47 +21,41 @@ struct ContentView: View {
     @State private var password: String = ""
     @State var loginTog = false
     
-    
+    @StateObject var twitch = Twitch()
 
 
+
     
-    
+   
+
 
     var body: some View {
-        nav()
-//        HomeView()
-//        WebView(url: URL(string: "https://www.google.com")!)
-//                       .ignoresSafeArea()
 
-               
+        
+        
 
-//        VStack{
-//            Form {
-//                       Section(header: Text("Username")) {
-//                           TextField(
-//                                   "User name ",
-//                                   text: $username
-//                               )
-//                       }
-//                       Section(header: Text("Password")) {
-//                           TextField(
-//                                   "password (email address)",
-//                                   text: $password
-//                               )
-//                       }
-//
-//                   }
-//            Button(action:login){
-//                Label("Sign In", systemImage: "arrow.up")
+        
+        nav(twitch:twitch).onAppear(){
+//            twitch.validateToken()
+//            twitch.followed()
+//            print(twitch.validUser, "VALID USER")
+//            if  twitch.validUser != nil {
+//                print(twitch.validUser, "VALID USER")
+//                print("running follows")
+//                twitch.followed()
+//                print(twitch.validUser, "VALID BOYYYY")
+//                
 //            }
-//            .sheet(isPresented: $loginTog) {
-//                WebView(url: URL(string:
-//            "https://www.google.com")!)
-//                           .ignoresSafeArea()
-//                   }
-//        }.padding(100)
+      
+//            print(twitch.followedList, "LIST IN APPEAR")
+
+        }
+        
 
     }
+    
+        
+
 }
 
 #Preview(windowStyle: .automatic) {

@@ -7,8 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4A0ED9302B8CEF270034B339 /* iFrame.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A0ED92F2B8CEF270034B339 /* iFrame.swift */; };
 		4A2175A42B8818BD0085B65F /* auth.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A2175A32B8818BD0085B65F /* auth.swift */; };
 		4A2175A82B8AB2120085B65F /* Home.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A2175A72B8AB2120085B65F /* Home.swift */; };
+		4A25C7282B9671AF00FBB779 /* sock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A25C7272B9671AF00FBB779 /* sock.swift */; };
 		4A364C192B865CF500C8F1D2 /* RealityKitContent in Frameworks */ = {isa = PBXBuildFile; productRef = 4A364C182B865CF500C8F1D2 /* RealityKitContent */; };
 		4A364C1B2B865CF500C8F1D2 /* lauraApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A364C1A2B865CF500C8F1D2 /* lauraApp.swift */; };
 		4A364C1D2B865CF500C8F1D2 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A364C1C2B865CF500C8F1D2 /* ContentView.swift */; };
@@ -17,8 +19,12 @@
 		4A364C632B866B7500C8F1D2 /* twitch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A364C622B866B7500C8F1D2 /* twitch.swift */; };
 		4A364C6F2B86873700C8F1D2 /* nav.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A364C6E2B86873700C8F1D2 /* nav.swift */; };
 		4A364C712B868BE500C8F1D2 /* following.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A364C702B868BE500C8F1D2 /* following.swift */; };
+		4A8EE3652B96051600E83D0B /* chat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A8EE3642B96051600E83D0B /* chat.swift */; };
+		4A8EE3692B96204000E83D0B /* embedEverything.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A8EE3682B96204000E83D0B /* embedEverything.swift */; };
 		4A92CB262B8B72F100C41FC4 /* profile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A92CB252B8B72F100C41FC4 /* profile.swift */; };
 		4AF4B33B2B8699F000484F70 /* SimpleOAuth2 in Frameworks */ = {isa = PBXBuildFile; productRef = 4AF4B33A2B8699F000484F70 /* SimpleOAuth2 */; };
+		4AFA938C2B9A3D9600F9C66A /* SocketIO in Frameworks */ = {isa = PBXBuildFile; productRef = 4AFA938B2B9A3D9600F9C66A /* SocketIO */; };
+		4AFA938E2B9A3DB600F9C66A /* sockio.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AFA938D2B9A3DB600F9C66A /* sockio.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -32,8 +38,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		4A0ED92F2B8CEF270034B339 /* iFrame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iFrame.swift; sourceTree = "<group>"; };
 		4A2175A32B8818BD0085B65F /* auth.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = auth.swift; sourceTree = "<group>"; };
 		4A2175A72B8AB2120085B65F /* Home.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Home.swift; sourceTree = "<group>"; };
+		4A25C7272B9671AF00FBB779 /* sock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = sock.swift; sourceTree = "<group>"; };
 		4A364C132B865CF500C8F1D2 /* laura.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = laura.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4A364C172B865CF500C8F1D2 /* RealityKitContent */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = RealityKitContent; sourceTree = "<group>"; };
 		4A364C1A2B865CF500C8F1D2 /* lauraApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = lauraApp.swift; sourceTree = "<group>"; };
@@ -45,7 +53,10 @@
 		4A364C622B866B7500C8F1D2 /* twitch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = twitch.swift; sourceTree = "<group>"; };
 		4A364C6E2B86873700C8F1D2 /* nav.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = nav.swift; sourceTree = "<group>"; };
 		4A364C702B868BE500C8F1D2 /* following.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = following.swift; sourceTree = "<group>"; };
+		4A8EE3642B96051600E83D0B /* chat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = chat.swift; sourceTree = "<group>"; };
+		4A8EE3682B96204000E83D0B /* embedEverything.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = embedEverything.swift; sourceTree = "<group>"; };
 		4A92CB252B8B72F100C41FC4 /* profile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = profile.swift; sourceTree = "<group>"; };
+		4AFA938D2B9A3DB600F9C66A /* sockio.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = sockio.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -55,6 +66,7 @@
 			files = (
 				4A364C192B865CF500C8F1D2 /* RealityKitContent in Frameworks */,
 				4AF4B33B2B8699F000484F70 /* SimpleOAuth2 in Frameworks */,
+				4AFA938C2B9A3D9600F9C66A /* SocketIO in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -68,9 +80,19 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4A0ED9312B922D390034B339 /* auth */ = {
+			isa = PBXGroup;
+			children = (
+				4A364C622B866B7500C8F1D2 /* twitch.swift */,
+				4A2175A32B8818BD0085B65F /* auth.swift */,
+			);
+			path = auth;
+			sourceTree = "<group>";
+		};
 		4A364C0A2B865CF500C8F1D2 = {
 			isa = PBXGroup;
 			children = (
+				4AFA938D2B9A3DB600F9C66A /* sockio.swift */,
 				4A364C152B865CF500C8F1D2 /* laura */,
 				4A364C162B865CF500C8F1D2 /* Packages */,
 				4A364C2B2B865CF600C8F1D2 /* lauraTests */,
@@ -90,17 +112,20 @@
 		4A364C152B865CF500C8F1D2 /* laura */ = {
 			isa = PBXGroup;
 			children = (
+				4A0ED9312B922D390034B339 /* auth */,
 				4A60CC812B8C355500D25976 /* Preview Content */,
-				4A364C622B866B7500C8F1D2 /* twitch.swift */,
 				4A364C6E2B86873700C8F1D2 /* nav.swift */,
 				4A364C702B868BE500C8F1D2 /* following.swift */,
-				4A2175A32B8818BD0085B65F /* auth.swift */,
+				4A25C7272B9671AF00FBB779 /* sock.swift */,
+				4A0ED92F2B8CEF270034B339 /* iFrame.swift */,
+				4A8EE3642B96051600E83D0B /* chat.swift */,
 				4A2175A72B8AB2120085B65F /* Home.swift */,
 				4A92CB252B8B72F100C41FC4 /* profile.swift */,
 				4A364C1A2B865CF500C8F1D2 /* lauraApp.swift */,
 				4A364C1C2B865CF500C8F1D2 /* ContentView.swift */,
 				4A364C1E2B865CF600C8F1D2 /* Assets.xcassets */,
 				4A364C232B865CF600C8F1D2 /* Info.plist */,
+				4A8EE3682B96204000E83D0B /* embedEverything.swift */,
 			);
 			path = laura;
 			sourceTree = "<group>";
@@ -147,6 +172,7 @@
 			packageProductDependencies = (
 				4A364C182B865CF500C8F1D2 /* RealityKitContent */,
 				4AF4B33A2B8699F000484F70 /* SimpleOAuth2 */,
+				4AFA938B2B9A3D9600F9C66A /* SocketIO */,
 			);
 			productName = laura;
 			productReference = 4A364C132B865CF500C8F1D2 /* laura.app */;
@@ -200,6 +226,7 @@
 			mainGroup = 4A364C0A2B865CF500C8F1D2;
 			packageReferences = (
 				4AF4B3392B8699F000484F70 /* XCRemoteSwiftPackageReference "SimpleOAuth2" */,
+				4AFA938A2B9A3D9600F9C66A /* XCRemoteSwiftPackageReference "socket" */,
 			);
 			productRefGroup = 4A364C142B865CF500C8F1D2 /* Products */;
 			projectDirPath = "";
@@ -235,12 +262,17 @@
 			buildActionMask = 2147483647;
 			files = (
 				4A364C1D2B865CF500C8F1D2 /* ContentView.swift in Sources */,
+				4A0ED9302B8CEF270034B339 /* iFrame.swift in Sources */,
+				4AFA938E2B9A3DB600F9C66A /* sockio.swift in Sources */,
+				4A25C7282B9671AF00FBB779 /* sock.swift in Sources */,
 				4A364C1B2B865CF500C8F1D2 /* lauraApp.swift in Sources */,
 				4A2175A82B8AB2120085B65F /* Home.swift in Sources */,
+				4A8EE3652B96051600E83D0B /* chat.swift in Sources */,
 				4A364C712B868BE500C8F1D2 /* following.swift in Sources */,
 				4A364C6F2B86873700C8F1D2 /* nav.swift in Sources */,
 				4A2175A42B8818BD0085B65F /* auth.swift in Sources */,
 				4A92CB262B8B72F100C41FC4 /* profile.swift in Sources */,
+				4A8EE3692B96204000E83D0B /* embedEverything.swift in Sources */,
 				4A364C632B866B7500C8F1D2 /* twitch.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -514,6 +546,14 @@
 				minimumVersion = 1.0.5;
 			};
 		};
+		4AFA938A2B9A3D9600F9C66A /* XCRemoteSwiftPackageReference "socket" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/socketio/socket.io-client-swift";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -525,6 +565,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 4AF4B3392B8699F000484F70 /* XCRemoteSwiftPackageReference "SimpleOAuth2" */;
 			productName = SimpleOAuth2;
+		};
+		4AFA938B2B9A3D9600F9C66A /* SocketIO */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 4AFA938A2B9A3D9600F9C66A /* XCRemoteSwiftPackageReference "socket" */;
+			productName = SocketIO;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

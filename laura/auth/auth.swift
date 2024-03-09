@@ -10,10 +10,11 @@ import SwiftUI
 import WebKit
 
 // Access Shared Defaults Object
-let userDefaults = UserDefaults.standard
+
 
 // Write/Set Value
 
+let userDefaults = UserDefaults.standard
 
 extension UIApplication {
     var firstKeyWindow: UIWindow? {
@@ -29,17 +30,19 @@ extension UIApplication {
 class AuthViewController: UIViewController,  WKNavigationDelegate {
     private var webView = WKWebView()
     
-    
+//    @StateObject var twitch = Twitch()
+    @ObservedObject var twitch : Twitch
 
     @Binding var url: String
     @Binding var isPresented: Bool
     @Binding var token: String
 
     
-    init(isPresented: Binding<Bool>, url: Binding<String>, token: Binding<String>) {
+    init(isPresented: Binding<Bool>, url: Binding<String>, token: Binding<String>,twitch:Twitch) {
             _isPresented = isPresented
             _url = url
             _token = token
+        self.twitch = twitch
             print(url, "URL IN INIT")
             super.init(nibName: nil, bundle: nil)
             print(self, "SELF")
@@ -82,7 +85,7 @@ class AuthViewController: UIViewController,  WKNavigationDelegate {
         guard let url = navigationAction.request.url else {
             return
         }
-        let redirect_string = "access_token"
+        let redirect_string = "code="
         
         let urlString = url.absoluteString
 //        let api = API()
@@ -91,12 +94,20 @@ class AuthViewController: UIViewController,  WKNavigationDelegate {
         if urlString.contains(redirect_string) {
             print("CONTAINS TOKEN")
             print(self, "SELF")
-            var i = urlString.components(separatedBy: "\(redirect_string)=")
+            var i = urlString.components(separatedBy: "\(redirect_string)")
             var d = i[1].components(separatedBy: "&")
             token = d[0]
+            print(token, "TOKEN")
+//            SEt Token
+            userDefaults.set(token, forKey: "userCode")
+            twitch.isLoggedIn = true
+//
             
+
+
             
             self.dismiss(animated: true)
+            
             print("FINAL KEY \(token)")
 
             print("SELF IN WEBVIE ", self)
@@ -114,6 +125,7 @@ class AuthViewController: UIViewController,  WKNavigationDelegate {
 
         }else {
             decisionHandler(.allow)
+            userDefaults.set(false, forKey: "loggedIn")
         }
       
     }
@@ -125,13 +137,16 @@ class AuthViewController: UIViewController,  WKNavigationDelegate {
 }
 struct AuthView: UIViewControllerRepresentable{
     typealias UIViewControllerType = AuthViewController
+    @ObservedObject  var twitch : Twitch
     
-    @State var url = "https://id.twitch.tv/oauth2/authorize?response_type=token&client_id=ijkkc54bexnbnwbor1iadizm2ho11d&redirect_uri=/home"
+    @State var url = """
+https://id.twitch.tv/oauth2/authorize?response_type=code&client_id=fi2u1al8b9d6l8w3pw184gr0yk71vo&redirect_uri=/home&scope=user:read:follows%20chat:edit%20chat:read
+"""
     @State  var isPresented = true
     @State var token:String = ""
     
     func makeUIViewController(context: Context) -> AuthViewController {
-        let viewController = AuthViewController(isPresented: $isPresented, url:$url , token:$token)
+        let viewController = AuthViewController(isPresented: $isPresented, url:$url , token:$token, twitch: twitch)
         return viewController
 
     }
@@ -139,7 +154,7 @@ struct AuthView: UIViewControllerRepresentable{
     func updateUIViewController(_ uiViewController: AuthViewController, context: Context) {
         if token.count > 0{
             
-            userDefaults.set(token, forKey: "userToken")
+            userDefaults.set(token, forKey: "userCode")
             
         }
 

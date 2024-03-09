@@ -11,48 +11,42 @@ import SwiftUI
 
 
 struct profile: View {
-    @StateObject var pc = Twitch()
-    @State var isPresented = Twitch().isPresented
+    @ObservedObject var twitch: Twitch
+
+    @State var loggedIn  = UserDefaults.standard.bool(forKey: "loggedIn")
+
+    @State var userName  = UserDefaults.standard.string(forKey: "userName")
+
 //    @State var showingSheet = true
     
     @ViewBuilder
     var body: some View {
+
+         
+//        @State var userName = twitch.userName
+       
         VStack{
-            Text("Username:")
-            Text(pc.validUser?.login ?? "You are not logged in. Please login to twitch")
-                .bold()
-//            Text ("Username : \(pc.validUser?.login)")
-//            Text (pc.User().)
+//            AuthView()
+
+//            Text (pc.validUser!.login )
             
-            if pc.isLoggedIn {
-                Button ("Log Out"){
-                    
-                }
-            } else {
-                Button ("Log In"){
-                isPresented.toggle()
-                }.sheet(isPresented: $isPresented) {
-                    AuthView()
-                }
-                
-            }
+            
+                Text("Username:")
+                    .bold()
+            Text ( twitch.userName ?? "" )
+//                Button ("Log Out"){
+//                    twitch.logout()
+//                }
+          
            
-        }  .onAppear(){
-            pc.validateToken()
         }
-//        Button("Show Sheet") {
-//                   showingSheet.toggle()
-//               }
-//             
-//              
         }
         
      
-            
 }
 
 
 
-#Preview {
-    profile()
-}
+//#Preview {
+//    profile()
+//}
