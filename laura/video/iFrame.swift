@@ -10,10 +10,20 @@ import SwiftUI
 import WebKit
 import JavaScriptCore
 
+//
+//
+//extension frameController {
+//    func pinEdges(to other: UIView) {
+//        leadingAnchor.constraint(equalTo: other.leadingAnchor).isActive = true
+//        trailingAnchor.constraint(equalTo: other.trailingAnchor).isActive = true
+//        topAnchor.constraint(equalTo: other.topAnchor).isActive = true
+//        bottomAnchor.constraint(equalTo: other.bottomAnchor).isActive = true
+//    }
+//}
 
 class frameController: UIViewController,  WKNavigationDelegate  {
     
-
+    
     
     
     var streamer: String
@@ -68,23 +78,23 @@ class frameController: UIViewController,  WKNavigationDelegate  {
 
 
 #twitch-container {
-    position: relative;
-   overflow: hidden;
-    width: 100%;
-  
   padding-top: 56.25%;
-    padding-top: 60.25%;
-  
+   position: relative;
+   height: 0;
+   pointer-events: none;
+
   }
+
   #twitch-embed iframe {
-    position: absolute;
-    margin: 0 0 0 -1em;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    right: 0;
-    width: 110%;
-    height: 100%;
+  position: absolute;
+   width:1832.2222245px ;
+
+   height: 1035px;
+   top: 0;
+margin: -1.5em 0 0 -1em;
+   pointer-events: none;
+
+
   }
   
 </style>
@@ -148,7 +158,8 @@ class frameController: UIViewController,  WKNavigationDelegate  {
           let config = WKWebViewConfiguration()
         config.ignoresViewportScaleLimits = true
           config.userContentController = contentController
-          webView = WKWebView(frame: CGRect.zero, configuration: config)
+        
+        webView = WKWebView(frame: CGRect.zero, configuration: config)
         
         webView.isOpaque = false
         webView.backgroundColor = UIColor.clear
