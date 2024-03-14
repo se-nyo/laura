@@ -35,15 +35,14 @@ struct nav: View {
     var body: some View {
         
         
-        
-        
         if twitch.isLoggedIn {
             TabView {
                 Home(twitch: twitch, sock:sock)
-               
-                
-//                iframe(streamer: twitch.currentStreamer)
                     .badge(1).tabItem { Label("Home", systemImage: "house.fill")}
+                    .ornament( visibility: .visible,
+                            attachmentAnchor: .scene(.trailing)) {
+                                    chat(twitch: twitch, chatinput: "", sock: sock)
+                                }
                 
                 profile(twitch:twitch).badge(0).tabItem { Label("Profile", systemImage: "person.fill") }
                 
@@ -129,7 +128,7 @@ struct nav: View {
                             
 //                            SOCK CONNECT
                             
-//                            sock.connect()
+                            sock.connect()
                             
                         }
                         

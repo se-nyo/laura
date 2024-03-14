@@ -38,7 +38,7 @@ struct Home: View {
         return userUrl
     }
     
-    @State  var vidvolume : Double = 50
+    @State  var vidvolume: Float = 0.5
     @State  var isEditing = false
     var controls: some View {
         
@@ -47,12 +47,12 @@ struct Home: View {
        return HStack {
             Button("Play", systemImage: "play.fill") {
                 print("button click")
-                vidController.active = true
+                vidController.vidActive = true
                 vidController.playing = true
                 print(vidController.playing, vidController.volume, "STATE OF VIDEO ")
             }
             Button("Pause", systemImage: "pause.fill") {
-                vidController.active = true
+                vidController.vidActive = true
                 vidController.playing = false
                 print(vidController.playing, vidController.volume, "STATE OF VIDEO ")
                 
@@ -60,10 +60,12 @@ struct Home: View {
             VStack{
                 Slider(
                     value: $vidvolume,
-                    in: 0...100,
+                    in: 0...1,
                     onEditingChanged: { editing in
                         
                         isEditing = editing
+                        vidController.volume = vidvolume
+                        vidController.volActive = true
                         print(editing)
                         print($vidvolume)
                         print(vidvolume)
@@ -81,9 +83,7 @@ struct Home: View {
     var body: some View {
             
         iframe(vidController: vidController, streamer:twitch.currentStreamer, twitch: twitch).frame(maxWidth: .infinity)
-            .ornament(attachmentAnchor: .scene(.trailing)) {
-                        chat(twitch: twitch, chatinput: "", sock: sock)
-                    }
+         
             .ornament(
                 visibility: .visible,
                 attachmentAnchor: .scene(.top),

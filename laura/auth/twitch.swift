@@ -9,7 +9,7 @@ import Foundation
 import Combine
 
 struct ChatMessage: Identifiable  {
-    let id: Int
+    let id: UUID
     let message: String
     let username: String
 
@@ -128,6 +128,11 @@ class Twitch : ObservableObject{
     
     
     @Published var switchStreamer : Bool = true
+    
+    @Published var hideAll : Bool = false
+
+    
+    
 
 
     

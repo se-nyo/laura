@@ -78,7 +78,8 @@ class sock: UIViewController, URLSessionWebSocketDelegate{
         }}
     
     func recieve() {
-        let chat_message = laura.ChatMessage(id: 0, message: "", username: "")
+        
+        let chat_message = laura.ChatMessage(id: UUID.init(), message: "", username: "")
 
         websocket?.receive(completionHandler:{
             [weak self] result in
@@ -89,28 +90,39 @@ class sock: UIViewController, URLSessionWebSocketDelegate{
                     case.data(let data):
                         print("Data message" /*data*/)
                     case.string(let str):
-//                        print("String message:::\(str)")
-                 
-//                    self?.twitch.chatMessages?.append(ChatMessage(id: randomInt, message: str) )
-//                    print(self?.twitch.chatMessages, "MESSAGES")
-//                    DispatchQueue.global().asyncAfter(deadline: .now()+1) {
-//
-//                    }
+                    print(str)
+
                     if str.contains("@badge-info"){
-                        self?.twitch.newmsg = str
-                        let randomInt = Int.random(in: 0..<100)
+                        DispatchQueue.main.async {
+                            self?.twitch.newmsg = str
+                        }
+                        
+//                        recurse
+                        var arr :[Int] = []
+
+                       
+                        
+                        
 //                        let o = str.split(separator: "\r\n")
                         let o = str.components(separatedBy:"\r\n")
                         let f = o[0].components(separatedBy:" :")[2]
                         
                         let name_ = str.components(separatedBy: "display-name=")
                         let name = name_[1].components(separatedBy: ";")[0]
+                        
+                        let max_messages = 15
                      
                     
-                       
-                        self?.twitch.chatMessages.append(ChatMessage(id: randomInt, message:f, username:name))
-                        if self?.twitch.chatMessages.count ?? 0 > 15{
-                            self?.twitch.chatMessages.removeFirst(1)
+//                       ##Dis
+                        DispatchQueue.main.async {
+                            self?.twitch.chatMessages.append(ChatMessage(id: UUID.init(), message:f, username:name))
+
+                        }
+                      
+                        if self?.twitch.chatMessages.count ?? 0 > max_messages{
+                            DispatchQueue.main.async {
+                                self?.twitch.chatMessages.removeFirst(1)
+                            }
                         }
                     }
                     if str.contains("You are in a maze of twisty passages, all alike"){
@@ -158,9 +170,6 @@ class sock: UIViewController, URLSessionWebSocketDelegate{
    
         print("CONNETED TO WEBSOCKET")
         ping()
-//        send(message: "hi")
-//        websocket?.send(URLSessionWebSocketTask.Message, completionHandler: <#T##((Error)?) -> Void#>)
-      
 
         
             self.send(message:coms);
@@ -179,10 +188,6 @@ class sock: UIViewController, URLSessionWebSocketDelegate{
     
     func urlSession(_ session: URLSession, webSocketTask: URLSessionWebSocketTask, didCloseWith closeCode: URLSessionWebSocketTask.CloseCode, reason: Data?) {
         print("DISCONNECTED REASON: \(String(describing: reason)))")
-        
-//        retryCount = retryCount*2
-        
-        
     }
     
     func urlSession(_ session: URLSession, webSocketTask: URLSessionWebSocketTask, didCompleteWithError error: Error?) {
@@ -190,31 +195,4 @@ class sock: UIViewController, URLSessionWebSocketDelegate{
         print("GOT ERR", error)
         
     }
-}
-
-
-struct chatView:View {
-    @State var twitch: Twitch
-//    let chat_message = laura.ChatMessage(id: 0, message: "")
-
-    var body: some View {
-        var chat = sock(twitch: twitch)
-//        @State var messages = twitch.chatMessages
-
-
-        VStack(){
-           
-            Text("CHAT")
-         
-//            List(twitch.chatMessages ?? [chat_message] ){
-//                Text($0.message)
-//                
-//            }
-        } .onAppear{
-//            chat.connect()
-          
-        }
-      
-    }
-    
 }

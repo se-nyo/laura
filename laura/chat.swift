@@ -17,7 +17,7 @@ struct chat: View {
     var body: some View {
         VStack{
             Spacer()
-            Text("\(twitch.currentStreamer)'s Chat").font(/*@START_MENU_TOKEN@*/.title/*@END_MENU_TOKEN@*/).padding(10)
+            Text("\(twitch.currentStreamer) Chat").font(/*@START_MENU_TOKEN@*/.title/*@END_MENU_TOKEN@*/).padding(10)
             ScrollView {
                 LazyVStack(alignment: .leading) {
                     ForEach(twitch.chatMessages) { message in
@@ -39,9 +39,9 @@ struct chat: View {
                         print(msg,"CHAT MSG")
                         
                         sock.send(message: msg)
-                        var c_msg = ChatMessage(id: 200, message: chatinput ?? "", username: twitch.userName ?? "")
+                        var c_msg = ChatMessage(id: UUID.init(), message: chatinput ?? "", username: twitch.userName ?? "")
                         
-                        chatinput = ""
+//                        chatinput = ""
                         //                            chat.recieve()
                         //                            SENDS TO IRC  BUT WONT REVIEC MY OWN MESSAGES THIS IS NOT IDEAL SOLUTION
                         twitch.chatMessages.append(c_msg)
