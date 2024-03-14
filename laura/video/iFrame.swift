@@ -10,93 +10,51 @@ import SwiftUI
 import WebKit
 import JavaScriptCore
 
-//
-//
-//extension frameController {
-//    func pinEdges(to other: UIView) {
-//        leadingAnchor.constraint(equalTo: other.leadingAnchor).isActive = true
-//        trailingAnchor.constraint(equalTo: other.trailingAnchor).isActive = true
-//        topAnchor.constraint(equalTo: other.topAnchor).isActive = true
-//        bottomAnchor.constraint(equalTo: other.bottomAnchor).isActive = true
-//    }
-//}
 
-class frameController: UIViewController,  WKNavigationDelegate  {
+struct controlState{
+    var playing: Bool
+    var volume: Float
     
-    
-    
-    
-    var streamer: String
-    
+}
 
-    init(streamer:String) {
-        self.streamer = streamer
-            print(streamer, streamer, "URL IN INIT")
-            super.init(nibName: nil, bundle: nil)
 
-        }
-        
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
+class vidControl: UIViewController , ObservableObject{
     
-    func script(streamer:String)->String{
-        print("in make scriot", streamer)
-        
-        var script =    """
-                          var options = {
-                            channel: "\(streamer)"
-                          };
-                        
-                          var player = new Twitch.Player("twitch-embed", options);
-                          player.setVolume(0.5);
+    
+//    @Published var vidState: controlState
+    @Published var active = false
+    @Published var playing: Bool =  true
+    @Published var volume: Float =  0.9
 
-                        """
-        
-        return script
-        
-    }
     
-    
-    
-//    new Twitch.Embed("twitch-embed", {
- ////                        width: 854,
- ////                        height: 480,
- ////                        channel: "central_committee"
- ////                      });
-        ///
-    ///
-    ///
-//    let parent="http://noiselab.app"
-    
-    
+  
 
+    
+}
+
+struct iframe: UIViewRepresentable{
+
+  var vidController:vidControl
+//    @State vidState =
+  
+    var streamer:String
+    var twitch: Twitch
+  
     let html:String = """
 <html>
-
 <style>
-
-
 #twitch-container {
   padding-top: 56.25%;
    position: relative;
    height: 0;
-   pointer-events: none;
-
   }
-
   #twitch-embed iframe {
   position: absolute;
    width:1832.2222245px ;
-
    height: 1035px;
    top: 0;
-margin: -1.5em 0 0 -1em;
-   pointer-events: none;
-
-
+margin: -1.2em 0 0 -1.2em;
   }
-  
 </style>
 <head>
 <script src="https://player.twitch.tv/js/embed/v1.js"></script>
@@ -106,125 +64,161 @@ margin: -1.5em 0 0 -1em;
   <div id="twitch-embed">
 </div>
 </div>
-
-   
   </body>
-
-
 </html>
-
 """
-    
-//    
-//    let ihtml:String = """
-//<iframe
-//    src="https://player.twitch.tv/?channel=hiswattson&parent=http://localhost"
-//    height="400"
-//    width="500"
-//    allowfullscreen>
-//</iframe>
-//
-//"""
 
+    func script(streamer:String)->String{
+        print("in make scriot", streamer)
 
+        var script =    """
+                          var options = {
+                            channel: "\(streamer)"
+                          };
+                        
+                          var player = new Twitch.Player("twitch-embed", options);
+                          player.setVolume(0.5);
 
-//    let context = JSContext();
-//    context.evaluateScript(script);
-
-    
-    var webView = WKWebView()
-    
-    var context = JSContext()
-
-    
-
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        setupWebView(streamer:streamer)
-        
-        
+                        """
+        return script
     }
-//            loadWebView()
+    
+    @State var web = WKWebView()
+
+
+    func makeUIView(context: Context) -> WKWebView {
+//        let initialFrame = CGRect(x: 10, y: 10, width: 600, height: 6000)
+//        let myView = UIView(frame: initialFrame)
+//        
+//        myView.addSubview(web)
+//        
         
-    func setupWebView(streamer:String) {
+        print("SCRIPT IN SETUP ::: (st",twitch.currentStreamer)
+        let userScript = WKUserScript(source:script(streamer: twitch.currentStreamer), injectionTime: .atDocumentEnd, forMainFrameOnly: false)
 
-          print("SCRIPT IN SETUP ::: (st", streamer)
-          let userScript = WKUserScript(source: self.script(streamer: streamer), injectionTime: .atDocumentEnd, forMainFrameOnly: false)
+                  let contentController = WKUserContentController()
+                  contentController.addUserScript(userScript)
 
-          let contentController = WKUserContentController()
-          contentController.addUserScript(userScript)
-
-          let config = WKWebViewConfiguration()
-        config.ignoresViewportScaleLimits = true
-          config.userContentController = contentController
+                  let config = WKWebViewConfiguration()
+                config.ignoresViewportScaleLimits = true
         
-        webView = WKWebView(frame: CGRect.zero, configuration: config)
+                  config.userContentController = contentController
+
+        web = WKWebView(frame: CGRect.zero, configuration: config)
+        web.backgroundColor = UIColor.clear
+        web.scrollView.backgroundColor = UIColor.clear
+        web.contentMode = .scaleToFill
+
+        web.isOpaque = false
+//       web.navigationDelegate = self
         
-        webView.isOpaque = false
-        webView.backgroundColor = UIColor.clear
-        webView.scrollView.backgroundColor = UIColor.clear
-//            webView.contentMode = .scaleAspectFill
-//            webView.contentMode = .scaleAspectFit
-            webView.contentMode = .scaleToFill
+        web.loadHTMLString(self.html, baseURL:URL(string: "http://localhost"))
+        
+//        var wrapperview :some View{
+            
+// 
+//                .ornament(
+//                    visibility: .visible,
+//                    attachmentAnchor: .scene(.top),
+//                    contentAlignment: .bottom
+//                ) {
+//                    HStack {
+//                        Button("Play", systemImage: "play.fill") {
+//                            
+//                            
+//                            print("button click")
+//                            var script =    """
+//                                                         
+//                                                          player.setMuted(false);
+//                                                          player.setVolume(0.6);
+//                                                        """
+//                            
+//                            self.web.evaluateJavaScript(script)
+//                            
+//                        }}}}
+        
+        
+        return web
+      
+    }
+    
+    func updateUIView(_ uiView: WKWebView, context: Context) {
+//        let userScript = WKUserScript(source:script(streamer: twitch.currentStreamer), injectionTime: .atDocumentEnd, forMainFrameOnly: false)
+//        
+//        print(vidController.playing, vidController.volume, "STATE OF VIDEO IN UPATE")
 
+        if vidController.active{
+            print("VID CONTROLLER IS ACTIVE")
+            DispatchQueue.main.async {
+                
+                let script = """
+                
+                  if (\(vidController.playing)){
+                player.play()
+                
+                }else{
+                player.pause()
+                }
+                
+                        
+                
+                """
+                print("NEW SCRIPT", script)
+                uiView.evaluateJavaScript(script){
+                    res , error in
+                    print(res, error, "RESULT FROM JAVSCRIPT EXECUTION")
+                }
+                
+                vidController.active = false
 
-
-
-
-          webView.navigationDelegate = self
-          webView.loadHTMLString(html, baseURL:URL(string: "http://localhost"))
-        view = webView
-        }
-        func loadWebView() {
-            print("WEB VIEW :\( webView)")
-//            webView.reload()
-
+            }
             
         }
-    
-    
-    }
-    
-
-
-struct iframe: UIViewControllerRepresentable{
-    var streamer:String
-
-//    print(streamerVar, "STREAMER")
-    
-
-    func makeUIViewController(context: Context) -> frameController {
-//        print("HTML: \(html), SCRIPT: \(script)")
-        print(streamer, "DOUBLE CHECk")
-        let frameController = frameController(streamer: streamer)
-        return frameController
-    }
-    
-    func updateUIViewController(_ uiViewController: frameController, context: Context) {
-        //print(streamer, "CONTEXT ENEW STREAMER")
-        print(streamer, "STREAMER VAR")
         
-//        roller.loadWebView()
-        print("TRANSACT", context.transaction)
-        print("Coordinator", context.coordinator)
-//        print("Environment", context.environment)
-//        self.makeUIViewController(context: context)
+        if twitch.switchStreamer {
+            print("SWITCH STREMER TRUE")
+            DispatchQueue.main.async {
+                
+                let script = """
+                
+                  var options = {
+                    channel: "\(twitch.currentStreamer)",
+                    controls: false
+                  };
+                  var player = new Twitch.Player("twitch-embed", options);
+                
+                                                       player.setMuted(false);
+                                                       player.setVolume(0.6);
+                
+                """
+                print("NEW SCRIPT", script)
+                uiView.evaluateJavaScript(script){
+                    res , error in
+                    print(res, error, "RESULT FROM JAVSCRIPT EXECUTION")}}
+            twitch.switchStreamer = false
+        }
        
-        DispatchQueue.main.async {
-            uiViewController.streamer = streamer
-            uiViewController.viewDidLoad()
-//            uiViewController.setupWebView(streamer: streamer)
-//            uiViewController.view = frameController(streamer: streamer)
-//            view  = frameController(streamer: streamer)
-            
-//            self.makeUIViewController(context: context)
-         
-          }
-
-
-
-
     }
+    
+//
+//    func updateUIViewController(_ uiViewController: frameController, context: Context) {
+////        
+//                DispatchQueue.main.async {
+//                    print( uiViewController.streamer, "CONTROLLER STREMER")
+//                    print( streamer, "PASSED")
+//
+//                    uiViewController.streamer = streamer
+////                    uiViewController.webview = webview
+//                    uiViewController.viewDidLoad()
+//
+//                    }
+//        print("UPDATE")
+////        if playerState.playing{
+////            
+////        }
+//        
+//  
+//        
+//    }
     
 }

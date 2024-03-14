@@ -43,7 +43,7 @@ class AuthViewController: UIViewController,  WKNavigationDelegate {
             _url = url
             _token = token
         self.twitch = twitch
-            print(url, "URL IN INIT")
+
             super.init(nibName: nil, bundle: nil)
             print(self, "SELF")
 
@@ -67,6 +67,12 @@ class AuthViewController: UIViewController,  WKNavigationDelegate {
         print("WEB CONFIGURATION \(webConfiguration)")
         webView = WKWebView(frame: .zero, configuration: webConfiguration)
         webView.navigationDelegate = self
+        
+        webView.scrollView.backgroundColor = UIColor.clear
+        webView.contentMode = .scaleToFill
+        webView.isOpaque = false
+        
+        
         view = webView
     }
     

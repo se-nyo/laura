@@ -82,7 +82,7 @@ class sock: UIViewController, URLSessionWebSocketDelegate{
 
         websocket?.receive(completionHandler:{
             [weak self] result in
-            print("RESULT!", result)
+//            print("RESULT!", result)
         switch result{
             case.success(let message):
                 switch message{
@@ -99,20 +99,17 @@ class sock: UIViewController, URLSessionWebSocketDelegate{
                     if str.contains("@badge-info"){
                         self?.twitch.newmsg = str
                         let randomInt = Int.random(in: 0..<100)
-//                        let streamer = self?.twitch.currentStreamer.lowercased()
 //                        let o = str.split(separator: "\r\n")
                         let o = str.components(separatedBy:"\r\n")
                         let f = o[0].components(separatedBy:" :")[2]
                         
                         let name_ = str.components(separatedBy: "display-name=")
                         let name = name_[1].components(separatedBy: ";")[0]
-                        print(o, "OOO")
-                        print(f, "SPLIT")
-                        
+                     
                     
                        
                         self?.twitch.chatMessages.append(ChatMessage(id: randomInt, message:f, username:name))
-                        if self?.twitch.chatMessages.count ?? 0 > 6{
+                        if self?.twitch.chatMessages.count ?? 0 > 15{
                             self?.twitch.chatMessages.removeFirst(1)
                         }
                     }
@@ -126,7 +123,7 @@ class sock: UIViewController, URLSessionWebSocketDelegate{
                          
                         }
                 
-                    print(message)
+//                    print(message)
                     }
             case.failure(let error):
                 print("error", error)

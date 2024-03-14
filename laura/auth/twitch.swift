@@ -113,6 +113,10 @@ class Twitch : ObservableObject{
     @Published var isPresented: Bool = false
     @Published var accessToken:String = ""
     @Published var userId:String = ""
+    
+    
+    @Published var previousStreamer:String = ""
+    
     @Published var currentStreamer:String = ""
     @Published var chatAuth:Bool=false
     
@@ -120,6 +124,14 @@ class Twitch : ObservableObject{
     @Published var chatMessages:[ChatMessage] = []
     
     @Published var newmsg : String?
+    @Published var allowRefresh : Bool?
+    
+    
+    @Published var switchStreamer : Bool = true
+
+
+    
+    
 
 
     
@@ -171,6 +183,7 @@ https://id.twitch.tv/oauth2/token?
                       
                    print("ERR AACCES TOKEN \(response)", error)
                       self?.isPresented = true
+                      self?.isLoggedIn = false
                       UserDefaults.standard.set(false, forKey: "loggedIn")
                       UserDefaults.standard.set("", forKey: "userName")
                       
@@ -182,7 +195,7 @@ https://id.twitch.tv/oauth2/token?
                         print(tokenResponse, "RESPONSE FRON ACCESS TOKEN")
                           
                           self?.accessToken = tokenResponse.access_token
-                          
+                          self?.isLoggedIn = true
                           UserDefaults.standard.set(true, forKey: "loggedIn")
 
                           completion(tokenResponse)
@@ -197,6 +210,12 @@ https://id.twitch.tv/oauth2/token?
         
     }
     
+    
+    func loggedIn(){
+        
+        
+        self.isLoggedIn = true
+    }
  
 
     
@@ -426,7 +445,7 @@ completion(signInResponse)
                           self?.channelUserList = res
                           
                           self?.channelUser = res.data
-                          self?.currentStreamer = res.data[0].display_name
+//                          self?.currentStreamer = res.data[0].display_name
 //                          completion(res.data)
                           print( self?.channelUser , "CHANNEL UES IN ASSIGNMENT")
 //                          print(signInResponse, "USER OB")
@@ -446,7 +465,7 @@ completion(signInResponse)
                   
                   if error != nil || (response as! HTTPURLResponse).statusCode != 200 {
 //                      self?.hasError = false
-                      self?.isLoggedIn = false
+
 
 
 

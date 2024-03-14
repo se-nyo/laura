@@ -22,40 +22,30 @@ struct ContentView: View {
     @State var loginTog = false
     
     @StateObject var twitch = Twitch()
-
-
-
     
-   
-
-
+    
+    
+    
+    
+    
+    
     var body: some View {
-
+        @State var sock_ = sock(twitch: twitch)
         
         
-
         
-        nav(twitch:twitch).onAppear(){
-//            twitch.validateToken()
-//            twitch.followed()
-//            print(twitch.validUser, "VALID USER")
-//            if  twitch.validUser != nil {
-//                print(twitch.validUser, "VALID USER")
-//                print("running follows")
-//                twitch.followed()
-//                print(twitch.validUser, "VALID BOYYYY")
-//                
-//            }
-      
-//            print(twitch.followedList, "LIST IN APPEAR")
-
-        }
         
-
+        
+        nav(twitch:twitch, sock: sock_)
+           
+                
+                
+                
+            
+        
+        
+        
     }
-    
-        
-
 }
 
 #Preview(windowStyle: .automatic) {

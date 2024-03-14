@@ -12,8 +12,8 @@ import SwiftUI
 
 struct lauraApp: App {
 
-    let max_height:CGFloat = 960
-    let max_width:CGFloat = 1536
+    let max_height:CGFloat = 975
+    let max_width:CGFloat = 1728
     var body: some Scene {
         WindowGroup {
             ContentView()
