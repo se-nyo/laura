@@ -105,7 +105,7 @@ class Twitch : ObservableObject{
         let code_val = userDefaults.string(forKey: "userCode") ?? ""
         print(code_val, "USER CODE FROM LOGINUSER CODE FROM LOGIN")
 
-        let params  =  ["client_id=fi2u1al8b9d6l8w3pw184gr0yk71vo","&client_secret=fc64zof4oeeut9fimj3mv69hew5xfb" , "&code=\(code_val)", "&grant_type=authorization_code&redirect_uri=/home"]
+        let params  =  ["client_id=","&client_secret=" , "&code=\(code_val)", "&grant_type=authorization_code&redirect_uri=/home"]
         
         var tokenUrl = """
 https://id.twitch.tv/oauth2/token?

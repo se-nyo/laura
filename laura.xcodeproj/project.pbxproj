@@ -23,7 +23,6 @@
 		4AB38FA72B9C9884001A1880 /* liveChannels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AB38FA62B9C9884001A1880 /* liveChannels.swift */; };
 		4AF4B33B2B8699F000484F70 /* SimpleOAuth2 in Frameworks */ = {isa = PBXBuildFile; productRef = 4AF4B33A2B8699F000484F70 /* SimpleOAuth2 */; };
 		4AFA938C2B9A3D9600F9C66A /* SocketIO in Frameworks */ = {isa = PBXBuildFile; productRef = 4AFA938B2B9A3D9600F9C66A /* SocketIO */; };
-		4AFA938E2B9A3DB600F9C66A /* sockio.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AFA938D2B9A3DB600F9C66A /* sockio.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -54,7 +53,6 @@
 		4A92CB252B8B72F100C41FC4 /* profile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = profile.swift; sourceTree = "<group>"; };
 		4AB38FA42B9C93ED001A1880 /* chat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = chat.swift; sourceTree = "<group>"; };
 		4AB38FA62B9C9884001A1880 /* liveChannels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = liveChannels.swift; sourceTree = "<group>"; };
-		4AFA938D2B9A3DB600F9C66A /* sockio.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = sockio.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -114,7 +112,6 @@
 		4A364C0A2B865CF500C8F1D2 = {
 			isa = PBXGroup;
 			children = (
-				4AFA938D2B9A3DB600F9C66A /* sockio.swift */,
 				4A364C152B865CF500C8F1D2 /* laura */,
 				4A364C162B865CF500C8F1D2 /* Packages */,
 				4A364C2B2B865CF600C8F1D2 /* lauraTests */,
@@ -269,7 +266,6 @@
 				4AB38FA52B9C93ED001A1880 /* chat.swift in Sources */,
 				4A364C1D2B865CF500C8F1D2 /* ContentView.swift in Sources */,
 				4A0ED9302B8CEF270034B339 /* iFrame.swift in Sources */,
-				4AFA938E2B9A3DB600F9C66A /* sockio.swift in Sources */,
 				4A25C7282B9671AF00FBB779 /* sock.swift in Sources */,
 				4A364C1B2B865CF500C8F1D2 /* lauraApp.swift in Sources */,
 				4A2175A82B8AB2120085B65F /* Home.swift in Sources */,

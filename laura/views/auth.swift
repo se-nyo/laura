@@ -146,7 +146,7 @@ struct AuthView: UIViewControllerRepresentable{
     @ObservedObject  var twitch : Twitch
     
     @State var url = """
-https://id.twitch.tv/oauth2/authorize?response_type=code&client_id=fi2u1al8b9d6l8w3pw184gr0yk71vo&redirect_uri=/home&scope=user:read:follows%20chat:edit%20chat:read
+https://id.twitch.tv/oauth2/authorize?response_type=code&client_id=&redirect_uri=/home&scope=user:read:follows%20chat:edit%20chat:read
 """
     @State  var isPresented = true
     @State var token:String = ""
