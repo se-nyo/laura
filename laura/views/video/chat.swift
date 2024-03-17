@@ -11,9 +11,9 @@ struct chat: View {
     @ObservedObject  var twitch : Twitch
     @State var chatinput:String = ""
     @State var sock : sock
-
-
-
+    
+    
+    
     var body: some View {
         VStack{
             Spacer()
@@ -26,13 +26,13 @@ struct chat: View {
                             Text(message.message)
                             
                         }
-//                        .cornerRadius(8)
-                            .padding([.trailing, .leading], 15)
-                            .padding([.top, .bottom], 4)
-
+                        //                        .cornerRadius(8)
+                        .padding([.trailing, .leading], 15)
+                        .padding([.top, .bottom], 4)
+                        
                         .font(.system(size: 20))
                     }
-                   
+                    
                     .onSubmit {
                         var msg = "PRIVMSG #\(twitch.currentStreamer.lowercased()) :\(chatinput ?? "")"
                         
@@ -41,13 +41,13 @@ struct chat: View {
                         sock.send(message: msg)
                         var c_msg = ChatMessage(id: UUID.init(), message: chatinput ?? "", username: twitch.userName ?? "")
                         
-//                        chatinput = ""
+                        //                        chatinput = ""
                         //                            chat.recieve()
                         //                            SENDS TO IRC  BUT WONT REVIEC MY OWN MESSAGES THIS IS NOT IDEAL SOLUTION
                         twitch.chatMessages.append(c_msg)
                     }
                 }
-
+                
             }
             TextField(
                 "Type something in chat",
@@ -56,12 +56,11 @@ struct chat: View {
             )
             .padding([.leading,.trailing, .top, .bottom], 20)
         }.padding(EdgeInsets())
-//            .background(.ultraThickMaterial)
-            
-        .frame(width:399, height:550)
-        .cornerRadius(20)
-        .glassBackgroundEffect()
-   
+        //            .background(.ultraThickMaterial)            
+            .frame(width:399, height:550)
+            .cornerRadius(20)
+            .glassBackgroundEffect()
+        
     }
 }
 

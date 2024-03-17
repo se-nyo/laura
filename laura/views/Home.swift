@@ -14,17 +14,16 @@ import JavaScriptCore
 
 
 struct Home: View {
-    //    @StateObject var twitch = Twitch()
     @ObservedObject  var twitch : Twitch
     @ObservedObject var vidController = vidControl()
     @State var sock : sock
-  
+    
     
     init(twitch: Twitch, sock: sock) {
         self.twitch = twitch
         self.sock = sock
     }
-
+    
     func userUrl ()-> String{
         
         var f:[String] = []
@@ -42,9 +41,9 @@ struct Home: View {
     @State  var isEditing = false
     var controls: some View {
         
-  
         
-       return HStack {
+        
+        return HStack {
             Button("Play", systemImage: "play.fill") {
                 print("button click")
                 vidController.vidActive = true
@@ -71,19 +70,17 @@ struct Home: View {
                         print(vidvolume)
                     }
                 )
-//                        Text("Level: \(vidvolume)")
             }
-         .frame(width: 400)
+            .frame(width: 400)
         }.padding(10)
-        .labelStyle(.iconOnly)
+            .labelStyle(.iconOnly)
             .padding(20)
             .glassBackgroundEffect()
     }
-
+    
     var body: some View {
-            
+        
         iframe(vidController: vidController, streamer:twitch.currentStreamer, twitch: twitch).frame(maxWidth: .infinity)
-         
             .ornament(
                 visibility: .visible,
                 attachmentAnchor: .scene(.top),
@@ -91,6 +88,11 @@ struct Home: View {
             ) {
                 controls
             }
+            .ornament( visibility: .visible,
+                       attachmentAnchor: .scene(.trailing)) {
+                chat(twitch: twitch, chatinput: "", sock: sock)
+            }
+        
     }
 }
 
