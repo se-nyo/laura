@@ -1,6 +1,7 @@
 {
   "images" : [
     {
+      "filename" : "background no aplha.png",
       "idiom" : "vision",
       "scale" : "2x"
     }
