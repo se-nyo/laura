@@ -61,7 +61,7 @@ class sock: UIViewController, URLSessionWebSocketDelegate{
     }
     
     func close() {
-        websocket?.cancel(with: .goingAway, reason: "bye".data(using: .utf8))
+        websocket?.cancel()
     }
     
     func send(message:String) {
@@ -91,6 +91,10 @@ class sock: UIViewController, URLSessionWebSocketDelegate{
                         print("Data message" /*data*/)
                     case.string(let str):
                     print(str)
+//                    
+//                    if str.contains("error"){
+//                        self?.close()
+//                    }
 
                     if str.contains("@badge-info"){
                         DispatchQueue.main.async {
@@ -136,13 +140,17 @@ class sock: UIViewController, URLSessionWebSocketDelegate{
                         }
                 
 //                    print(message)
+                    self?.recieve()
+
                     }
             case.failure(let error):
-                print("error", error)
+                print("error !!!", error)
+                self?.close()
+//            self?.websocket?.cancel()
                 
             }
             
-            self?.recieve()
+//            self?.recieve()
         })
         
     }
@@ -165,14 +173,15 @@ class sock: UIViewController, URLSessionWebSocketDelegate{
     
     func urlSession(_ session: URLSession, webSocketTask: URLSessionWebSocketTask, didOpenWithProtocol protocol: String?) {
         var coms = "CAP REQ :twitch.tv/membership twitch.tv/tags"
-        var ptoken = "PASS oauth:\(self.twitch.accessToken)"
+        
+        var ptoken = "PASS oauth:\(self.twitch.accessToken ?? "")"
         var username = "NICK \(self.twitch.userName ?? "")"
    
         print("CONNETED TO WEBSOCKET")
         ping()
 
         
-            self.send(message:coms);
+        self.send(message:coms);
         
         DispatchQueue.global().asyncAfter(deadline: .now()+1) {
             self.send(message:ptoken);

@@ -19,7 +19,7 @@
 	<key>CFBundleShortVersionString</key>
 	<string></string>
 	<key>CFBundleIcons.CFBundlePrimaryIcon</key>
-	<string>laura_icon</string>
+	<string>AppIcon</string>
 	<key>CFBundleGetInfoString</key>
 	<string></string>
 </dict>

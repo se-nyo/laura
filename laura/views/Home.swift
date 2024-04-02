@@ -26,7 +26,6 @@ struct Home: View {
     
     func userUrl ()-> String{
         
-        var f:[String] = []
         var userUrl = "GET https://api.twitch.tv/helix/users?"
         twitch.followedStreamers?.forEach{ streamer in
             print(streamer)
@@ -90,7 +89,10 @@ struct Home: View {
             }
             .ornament( visibility: .visible,
                        attachmentAnchor: .scene(.trailing)) {
-                chat(twitch: twitch, chatinput: "", sock: sock)
+                if twitch.isLoggedIn{
+                    chat(twitch: twitch, chatinput: "", sock: sock)
+
+                }
             }
         
     }

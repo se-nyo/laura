@@ -14,14 +14,52 @@ struct profile: View {
 
     @ViewBuilder
     var body: some View {
+        
+        
+       
         VStack{
-                Text("Username:")
-                    .bold()
-            Text ( twitch.userName ?? "" )
-//                Button ("Log Out"){
-//                    twitch.logout()
-//                }   
+            
+            if twitch.userName?.count ?? 0 > 0  {
+                VStack{
+                        Text("Username:")
+                            .bold()
+                    Text ( twitch.userName ?? "" )
+        //                Button ("Log Out"){
+        //                    twitch.logout()
+        //                }
+                }
+            }else{
+                
+                Button ("Login"){
+                                  twitch.isPresented.toggle()
+                              }.sheet(isPresented:  $twitch.isPresented) {
+                                  
+                                  AuthView(twitch:twitch)
+                                      .ornament( visibility: .visible,
+                                                 attachmentAnchor: .scene(.top)) {
+                                          Button ("Close"){
+                                              twitch.isPresented = false
+                                          }    .padding([.top], 120)
+//                                          .background(.ultraThickMaterial)
+
+                                      }
+
+                              }.onChange(of: twitch.isPresented) { oldValue,  newValue in
+                                  print( twitch.isPresented)
+                                  if  twitch.isPresented == false{
+              
+                                  }
+                              }
+                
+            }
+            
+        } .onTapGesture(){
+            
+            twitch.isPresented = false
         }
+     
+
+ 
         }
         
      

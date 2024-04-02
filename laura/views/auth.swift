@@ -33,9 +33,12 @@ class AuthViewController: UIViewController,  WKNavigationDelegate {
 //    @StateObject var twitch = Twitch()
     @ObservedObject var twitch : Twitch
 
+//    @State var sock = sock
+
     @Binding var url: String
     @Binding var isPresented: Bool
     @Binding var token: String
+    
 
     
     init(isPresented: Binding<Bool>, url: Binding<String>, token: Binding<String>,twitch:Twitch) {
@@ -43,6 +46,7 @@ class AuthViewController: UIViewController,  WKNavigationDelegate {
             _url = url
             _token = token
         self.twitch = twitch
+        
 
             super.init(nibName: nil, bundle: nil)
             print(self, "SELF")
@@ -106,13 +110,28 @@ class AuthViewController: UIViewController,  WKNavigationDelegate {
             print(token, "TOKEN")
 //            SEt Token
             userDefaults.set(token, forKey: "userCode")
+            twitch.userCode = token
             twitch.isLoggedIn = true
 //
             
+            twitch.access_token{ token in
+                self.twitch.validateToken(){
+                    user in
+                    self.twitch.followedLive(userId: user.user_id){ streamers in
+                        var userUrl = "https://api.twitch.tv/helix/users?"
+                        streamers.forEach{streamer in
+                            userUrl = userUrl + "id=\(streamer.user_id)&"
+                        }
+                        self.twitch.getUsers(userUrl: userUrl){
+                            user in
+                            self.twitch.currentStreamer = user[0].display_name
+                            self.twitch.switchStreamer = true
+                        }
+                        sock(twitch: self.twitch).connect()
+                    }
+                }}
 
-
-            
-            self.dismiss(animated: true)
+    
             
             print("FINAL KEY \(token)")
 
@@ -121,7 +140,7 @@ class AuthViewController: UIViewController,  WKNavigationDelegate {
 
 //            self.present(vc, animated: true, completion: nil)
 //            self.view = profile
-//            self.dismiss(animated: true, completion: nil)
+            self.dismiss(animated: true, completion: nil)
             self.navigationController?.popViewController(animated: true)
 
            
@@ -144,9 +163,12 @@ class AuthViewController: UIViewController,  WKNavigationDelegate {
 struct AuthView: UIViewControllerRepresentable{
     typealias UIViewControllerType = AuthViewController
     @ObservedObject  var twitch : Twitch
+
+
+    
     
     @State var url = """
-https://id.twitch.tv/oauth2/authorize?response_type=code&client_id=&redirect_uri=/home&scope=user:read:follows%20chat:edit%20chat:read
+https://id.twitch.tv/oauth2/authorize?response_type=code&client_id=fi2u1al8b9d6l8w3pw184gr0yk71vo&redirect_uri=/home&scope=user:read:follows%20chat:edit%20chat:read
 """
     @State  var isPresented = true
     @State var token:String = ""

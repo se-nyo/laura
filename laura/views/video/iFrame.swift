@@ -48,7 +48,7 @@ class frameController: UIViewController,  WKNavigationDelegate, WKScriptMessageH
    width:1832.2222245px ;
    height: 1035px;
    top: 0;
-margin: -1em 0 0 -1.2em;
+margin: -.8em 0 0 -1.2em;
   }
 </style>
 <head>

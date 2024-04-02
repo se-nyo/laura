@@ -29,6 +29,12 @@ struct Token: Decodable {
     let scope: [String]
     let token_type: String
 }
+
+struct ClientToken: Decodable{
+    let access_token: String
+}
+
+
 struct ChannelUser: Codable, Equatable, Hashable, Identifiable {
     let id : String
     let display_name: String
@@ -36,6 +42,19 @@ struct ChannelUser: Codable, Equatable, Hashable, Identifiable {
 }
 struct ChannelUserList: Hashable, Decodable{
    var data:[ChannelUser]
+}
+
+struct ClientStreamList : Hashable, Decodable {
+    var data:[ClientStreamer]
+
+}
+
+struct ClientStreamer: Codable, Equatable, Hashable, Identifiable{
+    let id : String
+        let  user_id:  String
+        let  user_name:  String
+         let thumbnail_url:  String
+      
 }
 struct Followed:Hashable, Decodable {
 
@@ -81,7 +100,13 @@ class Twitch : ObservableObject{
     @Published var channelUser:[ChannelUser]?
     @Published var chatMessages:[ChatMessage] = []
     
+    
+    @Published var clientStreamer:[ClientStreamer]?
+
+    
     @Published var isLoggedIn : Bool = false
+    @Published var isLoggedInClient : Bool = false
+
     @Published var hasError = false
     @Published var isPresented: Bool = false
     @Published var chatAuth:Bool=false
@@ -89,7 +114,12 @@ class Twitch : ObservableObject{
     @Published var hideAll : Bool = false
     @Published var allowRefresh : Bool?
 
+    @Published var userCode: String = ""
     @Published var accessToken:String = ""
+    @Published var clientToken:String = ""
+
+    
+    
     @Published var userId:String = ""
     @Published var previousStreamer:String = ""
     @Published var currentStreamer:String = ""
@@ -101,11 +131,41 @@ class Twitch : ObservableObject{
         return token ?? ""
     }
     
+    
+    func client_token(completion: @escaping ((String)->Void)){
+  
+        var tokenUrl = "https://id.twitch.tv/oauth2/token?client_id=fi2u1al8b9d6l8w3pw184gr0yk71vo&client_secret=fc64zof4oeeut9fimj3mv69hew5xfb&grant_type=client_credentials"
+        
+        let url = URL(string:tokenUrl)
+        var request = URLRequest(url:url!)
+        request.httpMethod = "POST"
+        
+        URLSession.shared.dataTask(with: request) { [weak self] data, response, error in
+              DispatchQueue.main.async {
+                  if error != nil || (response as! HTTPURLResponse).statusCode != 200 {
+print("CLINET CODE ERROR")
+                  } else if let data = data {
+                      do {
+                          let tokenResponse = try JSONDecoder().decode(ClientToken.self, from: data)
+                          self?.clientToken = tokenResponse.access_token
+                          self?.isLoggedInClient = true
+                          completion(tokenResponse.access_token)
+                      } catch {
+                          print("Unable to Decode Response \(error)")
+                      }
+                  }
+              }
+          }.resume()
+        
+    }
+    
     func access_token(completion:@escaping ((Token) -> Void)){
-        let code_val = userDefaults.string(forKey: "userCode") ?? ""
+        let code_val = self.userCode
         print(code_val, "USER CODE FROM LOGINUSER CODE FROM LOGIN")
+        
 
-        let params  =  ["client_id=","&client_secret=" , "&code=\(code_val)", "&grant_type=authorization_code&redirect_uri=/home"]
+        let params  =  ["client_id=fi2u1al8b9d6l8w3pw184gr0yk71vo","&client_secret=fc64zof4oeeut9fimj3mv69hew5xfb" , "&code=\(code_val)", "&grant_type=authorization_code&redirect_uri=/home"]
+
         
         var tokenUrl = """
 https://id.twitch.tv/oauth2/token?
@@ -122,6 +182,7 @@ https://id.twitch.tv/oauth2/token?
         URLSession.shared.dataTask(with: request) { [weak self] data, response, error in
               DispatchQueue.main.async {
                   if error != nil || (response as! HTTPURLResponse).statusCode != 200 {
+                      print("ERR IN CREATE TIKEN", error, response)
                       self?.isPresented = true
                       self?.isLoggedIn = false
                       UserDefaults.standard.set(false, forKey: "loggedIn")
@@ -150,24 +211,44 @@ https://id.twitch.tv/oauth2/token?
     
     func req(baseUrl:String )->URLRequest{
         
-        let clientId  = self.validUser?.client_id ?? ""
-        
-        print(clientId, "CLIENTID")
-        
-        
-        let url = URL(string:baseUrl)
-        print(url, "URL FROM URL")
-        
-            var request = URLRequest(url:url!)
-            request.addValue("Bearer \(self.accessToken)", forHTTPHeaderField: "Authorization")
-            request.addValue( clientId, forHTTPHeaderField: "Client-Id")
+        if self.isLoggedIn {
+            
+            let clientId  = self.validUser?.client_id ?? ""
+            
+            print(clientId, "CLIENTID")
+            let url = URL(string:baseUrl)
+            print(url, "URL FROM URL")
+            
+                var request = URLRequest(url:url!)
+                request.addValue("Bearer \(self.accessToken)", forHTTPHeaderField: "Authorization")
+                request.addValue( clientId, forHTTPHeaderField: "Client-Id")
 
-            request.addValue(
-                "application/json",
-                forHTTPHeaderField: "Content-Type"
-            )
-        
-            return request
+                request.addValue(
+                    "application/json",
+                    forHTTPHeaderField: "Content-Type"
+                )
+            
+            
+            
+                return request
+        } else{
+            let url = URL(string:baseUrl)
+
+                var request = URLRequest(url:url!)
+                request.addValue("Bearer \(self.clientToken)", forHTTPHeaderField: "Authorization")
+                request.addValue( "fi2u1al8b9d6l8w3pw184gr0yk71vo", forHTTPHeaderField: "Client-Id")
+
+                request.addValue(
+                    "application/json",
+                    forHTTPHeaderField: "Content-Type"
+                )
+            
+            
+            
+                return request
+            
+        }
+      
     }
         
     func validateToken(completion:@escaping ((User) -> Void)){
@@ -175,8 +256,9 @@ https://id.twitch.tv/oauth2/token?
         URLSession.shared.dataTask(with: self.req(baseUrl: validateUrl)) { [weak self] data, response, error in
               DispatchQueue.main.async {
                   if error != nil || (response as! HTTPURLResponse).statusCode != 200 {
+                      print(error, "EERRR Validate")
                   } else if let data = data {
-                      print(data,"D")
+                      print(data,"DATA RES")
                       do {
                           let signInResponse = try JSONDecoder().decode(User.self, from: data)
                          self?.validUser = signInResponse
@@ -285,6 +367,34 @@ completion(signInResponse)
                           let res  = try JSONDecoder().decode(ChannelUserList.self, from: data)
                           self?.channelUserList = res
                           self?.channelUser = res.data
+                          completion(res.data)
+                      } catch {
+                          print("Unable to Decode Response \(error)")
+                      }
+                  }
+              }
+          }.resume()
+        
+    }
+    
+    
+    func getStreams( completion:@escaping (([ClientStreamer]) -> Void)){
+        
+        let url = URL(string: "https://api.twitch.tv/helix/streams")
+        var request = URLRequest(url:url!)
+        request.addValue("Bearer \(self.clientToken)", forHTTPHeaderField: "Authorization")
+        request.addValue( "fi2u1al8b9d6l8w3pw184gr0yk71vo", forHTTPHeaderField: "Client-Id")
+        request.httpMethod = "GET"
+        URLSession.shared.dataTask(with:request) { [weak self] data, response, error in
+              DispatchQueue.main.async {
+                  
+                  if error != nil || (response as! HTTPURLResponse).statusCode != 200 {
+                  } else if let data = data {
+                      do {
+                          let res  = try JSONDecoder().decode(ClientStreamList.self, from: data)
+//                          self?.channelUserList = res
+                          self?.clientStreamer = res.data
+                          print(res.data, "RESULTS FROM TEH GUY")
                           completion(res.data)
                       } catch {
                           print("Unable to Decode Response \(error)")
